@@ -1,5 +1,33 @@
 return {
   {
+    "nvim-tree/nvim-tree.lua",
+    config = function()
+      require("nvim-tree").setup {
+        on_attach = function(bufnr)
+          local api = require "nvim-tree.api"
+
+          local function opts(desc)
+            return { desc = "Nvimtree " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+          end
+
+          api.config.mappings.default_on_attach(bufnr)
+
+          -- delete default key mappings
+          vim.keymap.del("n", "<C-e>", { buffer = bufnr })
+          vim.keymap.del("n", "H", { buffer = bufnr })
+          vim.keymap.del("n", "M", { buffer = bufnr })
+          vim.keymap.del("n", "L", { buffer = bufnr })
+
+          vim.keymap.set({ "n", "v" }, "<C-e>", "1<C-e>", opts "Scroll down")
+          vim.keymap.set({ "n", "v" }, "M", "M", opts "Goto middle")
+          vim.keymap.set({ "n", "v" }, "L", "L", opts "Goto bottom")
+          vim.keymap.set("n", "<C-H>", api.tree.toggle_hidden_filter, opts "Toggle Filter: Dotfiles")
+        end,
+      }
+    end,
+  },
+
+  {
     "stevearc/conform.nvim",
     -- event = 'BufWritePre', -- uncomment for format on save
     opts = require "configs.conform",
@@ -74,5 +102,23 @@ return {
     config = function()
       require("nvim-dap-virtual-text").setup()
     end,
+  },
+
+  {
+    "smoka7/multicursors.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvimtools/hydra.nvim",
+    },
+    opts = {},
+    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
+    keys = {
+      {
+        mode = { "v", "n" },
+        "<Leader>m",
+        "<cmd>MCstart<cr>",
+        desc = "Create a selection for selected text or word under the cursor",
+      },
+    },
   },
 }
