@@ -76,6 +76,7 @@ local function nvim_tree_init()
     local root = convert_to_local_path(first_arg)
     vim.print("set nvim-tree root to " .. root)
     api.tree.change_root(root)
+    vim.cmd("cd " .. root)
   end
 end
 

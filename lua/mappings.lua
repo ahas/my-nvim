@@ -3,6 +3,7 @@ require "nvchad.mappings"
 -- add yours here
 
 local map = vim.keymap.set
+local del = vim.keymap.del
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
@@ -12,10 +13,6 @@ map("n", "<C-Up>", "1<C-w>-", { noremap = true, silent = true, desc = "Window De
 map("n", "<C-Down>", "1<C-w>+", { noremap = true, silent = true, desc = "Window Increase height" })
 map("n", "<C-Left>", "1<C-w>>", { noremap = true, silent = true, desc = "Window Decrease width" })
 map("n", "<C-Right>", "1<C-w><", { noremap = true, silent = true, desc = "Window Increase width" })
-
--- buffers
-map("n", "[b", "<Cmd>bprev<CR>", { noremap = true, silent = true, desc = "Buffer Goto Previous" })
-map("n", "]b", "<Cmd>bnext<CR>", { noremap = true, silent = true, desc = "Buffer Goto Next" })
 
 -- dap
 local dap = require "dap"
@@ -73,3 +70,34 @@ if vim.g.neovide then
     { noremap = true, silent = true, desc = "Neovide Fullscreen" }
   )
 end
+
+-- tabufline
+del("n", "<leader>b")
+del("n", "<tab>")
+del("n", "<S-tab>")
+
+map("n", "<leader>bn", "<cmd>enew<CR>", { noremap = true, silent = true, desc = "Buffer New" })
+map("n", "[b", function()
+  require("nvchad.tabufline").prev()
+end, { noremap = true, silent = true, desc = "Buffer Goto Previous" })
+map("n", "]b", function()
+  require("nvchad.tabufline").next()
+end, { noremap = true, silent = true, desc = "Buffer Goto Next" })
+map("n", "<leader>bc", function()
+  require("nvchad.tabufline").closeAllBufs(false)
+end, { noremap = true, silent = true, desc = "Buffer Close others" })
+map("n", "<leader>bC", function()
+  require("nvchad.tabufline").closeAllBufs(true)
+end, { noremap = true, silent = true, desc = "Buffer Close all" })
+map("n", "<leader>bl", function()
+  require("nvchad.tabufline").closeBufs_at_direction "right"
+end, { noremap = true, silent = true, desc = "Buffer Close to the right" })
+map("n", "<leader>bh", function()
+  require("nvchad.tabufline").closeBufs_at_direction "left"
+end, { noremap = true, silent = true, desc = "Buffer Close to the left" })
+map("n", "<C-{>", function()
+  require("nvchad.tabufline").move_buf(-1)
+end, { noremap = true, silent = true, desc = "Buffer move to left" })
+map("n", "<C-}>", function()
+  require("nvchad.tabufline").move_buf(1)
+end, { noremap = true, silent = true, desc = "Buffer move to right" })
