@@ -23,6 +23,10 @@ return {
           vim.keymap.set({ "n", "v" }, "L", "L", opts "Goto bottom")
           vim.keymap.set("n", "<C-H>", api.tree.toggle_hidden_filter, opts "Toggle Filter: Dotfiles")
         end,
+        update_focused_file = {
+          enable = true,
+          update_root = true,
+        },
       }
     end,
   },
@@ -120,5 +124,14 @@ return {
         desc = "Create a selection for selected text or word under the cursor",
       },
     },
+  },
+
+  {
+    "RRethy/vim-illuminate",
+  },
+
+  {
+    "windwp/nvim-autopairs",
+    enabled = false,
   },
 }

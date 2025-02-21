@@ -23,8 +23,9 @@ for _, lsp in ipairs(servers) do
 end
 
 -- typescript
-local mason_registry = require('mason-registry')
-local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+local mason_registry = require "mason-registry"
+local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+  .. "/node_modules/@vue/language-server"
 
 lspconfig.ts_ls.setup {
   on_attach = nvlsp.on_attach,
@@ -36,9 +37,24 @@ lspconfig.ts_ls.setup {
       {
         name = "@vue/typescript-plugin",
         location = vue_language_server_path,
-        languages = { "vue" }
-      }
-    }
+        languages = { "vue" },
+      },
+    },
   },
-  filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" }
+
+  filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+
+  commands = {
+    OrganizeImports = {
+      function()
+        local params = {
+          command = "_typescript.organizeImports",
+          arguments = { vim.api.nvim_buf_get_name(0) },
+          title = "",
+        }
+        vim.lsp.buf.execute_command(params)
+      end,
+      description = "Organize Imports",
+    },
+  },
 }

@@ -101,3 +101,9 @@ end, { noremap = true, silent = true, desc = "Buffer move to left" })
 map("n", "<C-}>", function()
   require("nvchad.tabufline").move_buf(1)
 end, { noremap = true, silent = true, desc = "Buffer move to right" })
+
+-- vim-illuminate
+map("x", "<C-i>", require("illuminate").textobj_select)
+
+-- formatting
+map("n", "<leader>fo", "<Cmd>OrganizeImports<CR>", { noremap = true, silent = true, desc = "LSP Organize imports" })

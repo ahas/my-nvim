@@ -80,6 +80,28 @@ local function nvim_tree_init()
   end
 end
 
+local function focus_open_file()
+  local filename = vim.api.nvim_buf_get_name(1)
+
+  if not filename then
+    return
+  end
+
+  vim.print("focus open file: " .. filename)
+
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local bufname = vim.api.nvim_buf_get_name(buf)
+    if bufname:match(filename) then
+      vim.api.nvim_set_current_win(win)
+      return
+    end
+  end
+end
+
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = nvim_tree_init,
+  callback = function()
+    nvim_tree_init()
+    focus_open_file()
+  end,
 })
