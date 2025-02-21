@@ -23,6 +23,9 @@ return {
           vim.keymap.set({ "n", "v" }, "L", "L", opts "Goto bottom")
           vim.keymap.set("n", "<C-H>", api.tree.toggle_hidden_filter, opts "Toggle Filter: Dotfiles")
         end,
+        view = {
+          width = 36,
+        },
         update_focused_file = {
           enable = true,
           update_root = true,
