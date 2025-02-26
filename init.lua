@@ -13,6 +13,14 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy_config = require "configs.lazy"
 
+-- Close LSP Locations window when the file open
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, "n", "<CR>", "<CR>:cclose<CR>", { noremap = true, silent = true })
+  end,
+})
+
 -- load plugins
 require("lazy").setup({
   {
@@ -36,7 +44,7 @@ vim.schedule(function()
   require "mappings"
 end)
 
--- init nvim tree
+-- init cwd
 local function get_first_arg()
   local arg = vim.fn.argv(0)
 
@@ -66,16 +74,12 @@ local function convert_to_local_path(path)
   return vim.fn.fnamemodify(path, ":p:h")
 end
 
-local function nvim_tree_init()
-  local api = require "nvim-tree.api"
+local function init_cwd_to_open_file()
   local first_arg = get_first_arg()
-
-  api.tree.open()
 
   if first_arg and first_arg ~= "" then
     local root = convert_to_local_path(first_arg)
     vim.print("set nvim-tree root to " .. root)
-    api.tree.change_root(root)
     vim.cmd("cd " .. root)
   end
 end
@@ -101,7 +105,7 @@ end
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-    nvim_tree_init()
+    init_cwd_to_open_file()
     focus_open_file()
   end,
 })

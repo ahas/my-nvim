@@ -6,8 +6,6 @@ require("telescope").setup {
       "\\.nvim",
       "\\.output",
       "\\.vscode",
-      "\\.env",
-      "\\.env.*",
       "\\.gitignore",
       "\\.gitmodules",
       "\\.prettier*",

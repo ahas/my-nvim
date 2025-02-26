@@ -3,6 +3,8 @@ require "nvchad.options"
 local o = vim.opt
 
 o.colorcolumn = "108"
+o.tabstop = 2
+o.shiftwidth = 2
 
 -- neovide
 if vim.g.neovide then
