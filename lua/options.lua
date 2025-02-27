@@ -2,10 +2,6 @@ require "nvchad.options"
 
 local o = vim.opt
 
-o.colorcolumn = "108"
-o.tabstop = 2
-o.shiftwidth = 2
-
 -- neovide
 if vim.g.neovide then
   o.guifont = "BlexMono Nerd Font,D2Coding:h12:e-antialiasing"
@@ -18,3 +14,8 @@ if vim.g.neovide then
   vim.g.neovide_remember_window_size = false
   vim.g.neovide_cursor_vfx_mode = "pixiedust"
 end
+
+o.colorcolumn = "108"
+o.tabstop = 2
+o.shiftwidth = 2
+vim.g.rust_recommended_style = false
