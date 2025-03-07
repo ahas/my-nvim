@@ -40,24 +40,18 @@ dofile(vim.g.base46_cache .. "statusline")
 require "options"
 require "nvchad.autocmds"
 
-vim.schedule(function()
-  require "mappings"
-end)
+vim.schedule(function() require "mappings" end)
 
 -- init cwd
 local function get_first_arg()
   local arg = vim.fn.argv(0)
 
-  if type(arg) == "table" then
-    return tostring(arg[1] or "")
-  end
+  if type(arg) == "table" then return tostring(arg[1] or "") end
 
   return tostring(arg)
 end
 
-local function is_wsl()
-  return vim.loop.os_uname().release:lower():find "wsl" ~= nil
-end
+local function is_wsl() return vim.loop.os_uname().release:lower():find "wsl" ~= nil end
 
 local function convert_to_local_path(path)
   if is_wsl() then
@@ -74,22 +68,22 @@ local function convert_to_local_path(path)
   return vim.fn.fnamemodify(path, ":p:h")
 end
 
-local function init_cwd_to_open_file()
-  local first_arg = get_first_arg()
-
-  if first_arg and first_arg ~= "" then
-    local root = convert_to_local_path(first_arg)
+local function init_cwd_to(path)
+  if path and path ~= "" then
+    local root = convert_to_local_path(path)
     vim.print("set nvim-tree root to " .. root)
     vim.cmd("cd " .. root)
+
+    return root
   end
+
+  return nil
 end
 
 local function focus_open_file()
   local filename = vim.api.nvim_buf_get_name(1)
 
-  if not filename then
-    return
-  end
+  if not filename then return end
 
   vim.print("focus open file: " .. filename)
 
@@ -105,7 +99,11 @@ end
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-    init_cwd_to_open_file()
+    local arg0 = get_first_arg()
+    local root = init_cwd_to(arg0)
     focus_open_file()
+
+    vim.cmd "set title"
+    vim.cmd("set titlestring=" .. root)
   end,
 })
