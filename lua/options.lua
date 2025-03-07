@@ -15,7 +15,7 @@ if vim.g.neovide then
   vim.g.neovide_cursor_vfx_mode = "pixiedust"
 end
 
-o.colorcolumn = "108"
+o.colorcolumn = "108,120"
 o.tabstop = 2
 o.shiftwidth = 2
 vim.g.rust_recommended_style = false

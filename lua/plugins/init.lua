@@ -52,19 +52,27 @@ return {
   },
 
   {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    lazy = false,
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
-        "html",
-        "css",
-        "vue",
-        "typescript",
-        "rust",
-      },
-    },
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = {
+          "vim",
+          "lua",
+          "vimdoc",
+          "html",
+          "css",
+          "vue",
+          "typescript",
+          "rust",
+        },
+      }
+      require("ts_context_commentstring").setup { enable = true }
+    end,
   },
 
   {
@@ -156,4 +164,13 @@ return {
   --     }
   --   end,
   -- },
+  --
+  {
+    "saecki/crates.nvim",
+    lazy = false,
+    tag = "stable",
+    config = function()
+      require("crates").setup()
+    end,
+  },
 }
