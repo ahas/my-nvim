@@ -32,7 +32,7 @@ return {
         },
         filters = {
           dotfiles = false,
-        }
+        },
       }
     end,
   },
@@ -46,40 +46,39 @@ return {
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-    end,
+    config = function() require "configs.lspconfig" end,
   },
 
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = false,
+    opts = {
+      enable = true,
+    },
   },
 
-  {
-    "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = {
-          "vim",
-          "lua",
-          "vimdoc",
-          "html",
-          "css",
-          "vue",
-          "typescript",
-          "rust",
-        },
-      }
-      require("ts_context_commentstring").setup { enable = true }
-    end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   config = function()
+  --     require("nvim-treesitter.configs").setup {
+  --       ensure_installed = {
+  --         "vim",
+  --         "lua",
+  --         "vimdoc",
+  --         "html",
+  --         "css",
+  --         "vue",
+  --         "typescript",
+  --         "rust",
+  --       },
+  --     }
+  --     require("ts_context_commentstring").setup { enable = true, enable_autocmd = false }
+  --   end,
+  -- },
 
   {
     "nvim-telescope/telescope.nvim",
-    config = function()
-      require "configs.telescope"
-    end,
+    config = function() require "configs.telescope" end,
   },
 
   {
@@ -99,9 +98,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = "ldelossa/nvim-dap-projects",
-    config = function()
-      require("nvim-dap-projects").search_project_config()
-    end,
+    config = function() require("nvim-dap-projects").search_project_config() end,
   },
 
   { "nvim-neotest/nvim-nio" },
@@ -109,17 +106,13 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-    config = function()
-      require("dapui").setup()
-    end,
+    config = function() require("dapui").setup() end,
   },
 
   {
     "theHamsta/nvim-dap-virtual-text",
     dependencies = { "mfussenegger/nvim-dap" },
-    config = function()
-      require("nvim-dap-virtual-text").setup()
-    end,
+    config = function() require("nvim-dap-virtual-text").setup() end,
   },
 
   {
@@ -169,8 +162,6 @@ return {
     "saecki/crates.nvim",
     lazy = false,
     tag = "stable",
-    config = function()
-      require("crates").setup()
-    end,
+    config = function() require("crates").setup() end,
   },
 }
