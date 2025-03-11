@@ -10,6 +10,13 @@ local options = {
     python = { "black" },
   },
 
+  formatters = {
+    injected = { options = { ignore_errors = true } },
+    black = {
+      prepend_args = { "--line-length", "88" },
+    },
+  },
+
   format_on_save = {
     -- These options will be passed to conform.format()
     timeout_ms = 2000,

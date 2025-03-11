@@ -42,6 +42,13 @@ require "nvchad.autocmds"
 
 vim.schedule(function() require "mappings" end)
 
+-- add file types
+vim.filetype.add {
+  pattern = {
+    [".*%.ipynb.*"] = "python",
+  },
+}
+
 -- init cwd
 local function get_first_arg()
   local arg = vim.fn.argv(0)
