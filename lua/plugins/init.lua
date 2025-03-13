@@ -51,35 +51,68 @@ return {
   },
 
   {
+    "numToStr/Comment.nvim",
+  },
+
+  {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = false,
+    opts = { enabled = true },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = {
+          "vim",
+          "lua",
+          "vimdoc",
+          "html",
+          "css",
+          "scss",
+          "vue",
+          "typescript",
+          "rust",
+        },
+        highlight = {
+          enable = true,
+        },
+      }
+    end,
+  },
+  {
+    "numToStr/Comment.nvim",
+    lazy = false,
+    config = function()
+      require("Comment").setup {
+        pre_hook = function() return vim.bo.commentstring end,
+      }
+    end,
+  },
+
+  {
+    "vuki656/package-info.nvim",
+    lazy = false,
     opts = {
-      enable = true,
+      package_manager = "bun",
     },
   },
 
-  -- {
-  --   "nvim-treesitter/nvim-treesitter",
-  --   config = function()
-  --     require("nvim-treesitter.configs").setup {
-  --       ensure_installed = {
-  --         "vim",
-  --         "lua",
-  --         "vimdoc",
-  --         "html",
-  --         "css",
-  --         "vue",
-  --         "typescript",
-  --         "rust",
-  --       },
-  --     }
-  --     require("ts_context_commentstring").setup { enable = true, enable_autocmd = false }
-  --   end,
-  -- },
-
   {
     "nvim-telescope/telescope.nvim",
-    config = function() require "configs.telescope" end,
+    config = function()
+      require("telescope").setup {
+        extensions = {
+          package_info = {
+            -- Optional theme (the extension doesn't set a default theme)
+            theme = "ivy",
+          },
+        },
+      }
+      require("telescope").load_extension "package_info"
+      require "configs.telescope"
+    end,
   },
 
   {

@@ -9,6 +9,7 @@ local del = vim.keymap.del
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
+del("n", "<leader>n")
 
 -- window resize
 local function init_window_resize()
@@ -122,8 +123,24 @@ local function init_crates_nvim()
   vim.keymap.set("n", "<leader>cL", crates.open_lib_rs, D "Open lib.rs")
 end
 
+-- package-info.nvim
+local function init_package_info_nvim()
+  local api = require "package-info"
+  local opts = { silent = true, noremap = true }
+  local function D(desc) return _with_desc(opts, "PackageInfo " .. desc) end
+
+  vim.keymap.set({ "n" }, "<LEADER>ns", api.show, D "Show dependency versions")
+  vim.keymap.set({ "n" }, "<LEADER>nc", api.hide, D "Hide dependency versions")
+  vim.keymap.set({ "n" }, "<LEADER>nt", api.toggle, D "Toggle dependency versions")
+  vim.keymap.set({ "n" }, "<LEADER>nu", api.update, D "Update dependency on the line")
+  vim.keymap.set({ "n" }, "<LEADER>nd", api.delete, D "Delete dependency on the line")
+  vim.keymap.set({ "n" }, "<LEADER>ni", api.install, D "Install a new dependency")
+  vim.keymap.set({ "n" }, "<LEADER>np", api.change_version, D "Install a different dependency version")
+end
+
 init_window_resize()
 init_dap()
 init_neovide()
 init_tabufline()
 init_crates_nvim()
+init_package_info_nvim()
