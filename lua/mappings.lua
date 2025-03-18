@@ -83,8 +83,21 @@ local function init_tabufline()
   map("n", "<leader>bC", function() tabufline.closeAllBufs(true) end, D "Close all")
   map("n", "<leader>bl", function() tabufline.closeBufs_at_direction "right" end, D "Close to the right")
   map("n", "<leader>bh", function() tabufline.closeBufs_at_direction "left" end, D "Close to the left")
-  map("n", "<C-{>", function() tabufline.move_buf(-1) end, D "Move to left")
-  map("n", "<C-}>", function() tabufline.move_buf(1) end, D "Move to right")
+  map("n", "<C-S-Left>", function() tabufline.move_buf(-1) end, D "Move to left")
+  map("n", "<C-S-Right>", function() tabufline.move_buf(1) end, D "Move to right")
+end
+
+-- telescope
+local function init_telescope()
+  local telescope = require "telescope.builtin"
+  local opts = { noremap = true, silent = true }
+  local function D(desc) return _with_desc(opts, "telescope " .. desc) end
+
+  map("n", "<leader>fW", function()
+    telescope.live_grep {
+      additional_args = function() return { "--case-sensitive" } end,
+    }
+  end, D "live grep (case sensitive)")
 end
 
 -- vim-illuminate
@@ -129,18 +142,19 @@ local function init_package_info_nvim()
   local opts = { silent = true, noremap = true }
   local function D(desc) return _with_desc(opts, "PackageInfo " .. desc) end
 
-  vim.keymap.set({ "n" }, "<LEADER>ns", api.show, D "Show dependency versions")
-  vim.keymap.set({ "n" }, "<LEADER>nc", api.hide, D "Hide dependency versions")
-  vim.keymap.set({ "n" }, "<LEADER>nt", api.toggle, D "Toggle dependency versions")
-  vim.keymap.set({ "n" }, "<LEADER>nu", api.update, D "Update dependency on the line")
-  vim.keymap.set({ "n" }, "<LEADER>nd", api.delete, D "Delete dependency on the line")
-  vim.keymap.set({ "n" }, "<LEADER>ni", api.install, D "Install a new dependency")
-  vim.keymap.set({ "n" }, "<LEADER>np", api.change_version, D "Install a different dependency version")
+  vim.keymap.set({ "n" }, "<leader>ns", api.show, D "Show dependency versions")
+  vim.keymap.set({ "n" }, "<leader>nc", api.hide, D "Hide dependency versions")
+  vim.keymap.set({ "n" }, "<leader>nt", api.toggle, D "Toggle dependency versions")
+  vim.keymap.set({ "n" }, "<leader>nu", api.update, D "Update dependency on the line")
+  vim.keymap.set({ "n" }, "<leader>nd", api.delete, D "Delete dependency on the line")
+  vim.keymap.set({ "n" }, "<leader>ni", api.install, D "Install a new dependency")
+  vim.keymap.set({ "n" }, "<leader>np", api.change_version, D "Install a different dependency version")
 end
 
 init_window_resize()
 init_dap()
 init_neovide()
 init_tabufline()
+init_telescope()
 init_crates_nvim()
 init_package_info_nvim()
