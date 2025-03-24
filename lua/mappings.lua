@@ -1,13 +1,10 @@
 require "nvchad.mappings"
 
+local _with_desc = function(opts, desc) return vim.tbl_extend("force", opts, { desc = desc }) end
+local map = vim.keymap.set
+local del = vim.keymap.del
+
 function InitMappings()
-  local _with_desc = function(opts, desc) return vim.tbl_extend("force", opts, { desc = desc }) end
-
-  -- add yours here
-
-  local map = vim.keymap.set
-  local del = vim.keymap.del
-
   map("n", ";", ":", { desc = "CMD enter command mode" })
   map("i", "jk", "<ESC>")
   del("n", "<leader>n")

@@ -17,7 +17,8 @@ for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = function(client, bufnr)
       nvlsp.on_attach(client, bufnr)
-      require("../mappings").InitMappings()
+      require "../mappings"
+      InitMappings()
     end,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
