@@ -7,7 +7,7 @@ local options = {
     typescript = { "prettierd", "prettier", stop_after_first = true },
     javascript = { "prettierd", "prettier", stop_after_first = true },
     vue = { "prettierd", "prettier", stop_after_first = true },
-    python = { "black" },
+    python = { "isort", "black" },
   },
 
   formatters = {

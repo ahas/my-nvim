@@ -39,7 +39,7 @@ dofile(vim.g.base46_cache .. "statusline")
 
 require "options"
 require "nvchad.autocmds"
-require "mappings"
+require("mappings").init()
 
 -- add file types
 vim.filetype.add {

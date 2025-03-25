@@ -74,6 +74,7 @@ return {
           "vue",
           "typescript",
           "rust",
+          "python"
         },
         highlight = {
           enable = true,
@@ -165,10 +166,6 @@ return {
         desc = "Create a selection for selected text or word under the cursor",
       },
     },
-  },
-
-  {
-    "RRethy/vim-illuminate",
   },
 
   {

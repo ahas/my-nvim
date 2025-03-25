@@ -21,7 +21,9 @@ local del = function(modes, lhs, opts)
   end
 end
 
-function InitMappings()
+local M = {}
+
+function M.init()
   map("n", ";", ":", { desc = "CMD enter command mode" })
   map("i", "jk", "<ESC>")
   del("n", "<leader>n")
@@ -115,9 +117,6 @@ function InitMappings()
     end, D "live grep (case sensitive)")
   end
 
-  -- vim-illuminate
-  -- map("x", "<C-i>", require("illuminate").textobj_select)
-
   -- formatting
   map("n", "<leader>fo", "<Cmd>OrganizeImports<CR>", { noremap = true, silent = true, desc = "LSP Organize imports" })
 
@@ -174,3 +173,5 @@ function InitMappings()
   init_crates_nvim()
   init_package_info_nvim()
 end
+
+return M

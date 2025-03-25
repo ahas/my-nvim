@@ -1,25 +1,30 @@
--- load defaults i.e lua_lsp
-require("nvchad.configs.lspconfig").defaults()
-
+local nvlsp = require "nvchad.configs.lspconfig"
 local lspconfig = require "lspconfig"
 
+nvlsp.defaults()
+
 local servers = {
-  "html",
+  "pylsp",
+  "taplo",
   "cssls",
-  "ts_ls",
-  "volar",
+  "css_variables",
+  "html",
   "rust_analyzer",
+  "somesass_ls",
+  "emmet_ls",
+  "jsonls",
+  "unocss",
 }
-local nvlsp = require "nvchad.configs.lspconfig"
+
+local function on_attach(client, bufnr)
+  nvlsp.on_attach(client, bufnr)
+  require("mappings").init()
+end
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
-    on_attach = function(client, bufnr)
-      nvlsp.on_attach(client, bufnr)
-      require "../mappings"
-      InitMappings()
-    end,
+    on_attach = on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
   }
@@ -31,7 +36,7 @@ local vue_language_server_path = mason_registry.get_package("vue-language-server
   .. "/node_modules/@vue/language-server"
 
 lspconfig.ts_ls.setup {
-  on_attach = nvlsp.on_attach,
+  on_attach = on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
 
