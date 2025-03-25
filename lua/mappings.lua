@@ -116,7 +116,7 @@ function InitMappings()
   end
 
   -- vim-illuminate
-  map("x", "<C-i>", require("illuminate").textobj_select)
+  -- map("x", "<C-i>", require("illuminate").textobj_select)
 
   -- formatting
   map("n", "<leader>fo", "<Cmd>OrganizeImports<CR>", { noremap = true, silent = true, desc = "LSP Organize imports" })

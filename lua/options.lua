@@ -18,4 +18,5 @@ end
 o.colorcolumn = "108,120"
 o.tabstop = 2
 o.shiftwidth = 2
+o.relativenumber = true
 vim.g.rust_recommended_style = false
