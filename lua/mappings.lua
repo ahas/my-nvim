@@ -2,32 +2,11 @@ require "nvchad.mappings"
 
 local _with_desc = function(opts, desc) return vim.tbl_extend("force", opts, { desc = desc }) end
 local map = vim.keymap.set
-local del = function(modes, lhs, opts)
-  local function unmap_if_exists(mode)
-    for _, v in ipairs(vim.api.nvim_get_keymap(mode)) do
-      if v.lhs == lhs then
-        vim.keymap.del(mode, lhs, opts)
-        break
-      end
-    end
-  end
-
-  if type(modes) == "string" then
-    unmap_if_exists(modes)
-  elseif type(modes) == "table" then
-    for _, mode in ipairs(modes) do
-      unmap_if_exists(mode)
-    end
-  end
-end
+local del = vim.keymap.del
 
 local M = {}
 
 function M.init()
-  map("n", ";", ":", { desc = "CMD enter command mode" })
-  map("i", "jk", "<ESC>")
-  del("n", "<leader>n")
-
   -- window resize
   local function init_window_resize()
     local opts = { noremap = true, silent = true }
@@ -115,6 +94,14 @@ function M.init()
         additional_args = function() return { "--case-sensitive" } end,
       }
     end, D "live grep (case sensitive)")
+
+    map("n", "<leader>fD", function() telescope.diagnostics() end, D "telescope diagnostics")
+    map(
+      "n",
+      "<leader>fd",
+      function() telescope.diagnostics { bufnr = 0 } end,
+      D "telescope diagnostics (current buffer)"
+    )
   end
 
   -- formatting
@@ -172,6 +159,9 @@ function M.init()
   init_telescope()
   init_crates_nvim()
   init_package_info_nvim()
+
+  map("n", ";", ":", { desc = "CMD enter command mode" })
+  map("i", "jk", "<ESC>")
 end
 
 return M
