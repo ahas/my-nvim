@@ -19,10 +19,4 @@ M.ui = {
   },
 }
 
-M.disabled = {
-  n = {
-    ["<tab>"] = "",
-  },
-}
-
 return M
