@@ -11,20 +11,19 @@ local servers = {
   "html",
   "rust_analyzer",
   "somesass_ls",
-  "emmet_ls",
   "jsonls",
   "unocss",
 }
 
-local function on_attach(client, bufnr)
-  nvlsp.on_attach(client, bufnr)
-  require("mappings").init()
-end
+-- local function on_attach(client, bufnr)
+--   nvlsp.on_attach(client, bufnr)
+--   require("mappings").init()
+-- end
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
-    on_attach = on_attach,
+    on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
   }
@@ -36,7 +35,7 @@ local vue_language_server_path = mason_registry.get_package("vue-language-server
   .. "/node_modules/@vue/language-server"
 
 lspconfig.ts_ls.setup {
-  on_attach = on_attach,
+  on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
 

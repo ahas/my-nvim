@@ -106,10 +106,13 @@ end
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     local arg0 = get_first_arg()
-    local root = init_cwd_to(arg0)
-    focus_open_file()
 
-    vim.cmd "set title"
-    vim.cmd("set titlestring=" .. root)
+    if arg0 ~= "" then
+      local root = init_cwd_to(arg0)
+      focus_open_file()
+
+      vim.cmd "set title"
+      vim.cmd("set titlestring=" .. root)
+    end
   end,
 })
