@@ -104,9 +104,6 @@ function M.init()
     )
   end
 
-  -- formatting
-  map("n", "<leader>fo", "<Cmd>OrganizeImports<CR>", { noremap = true, silent = true, desc = "LSP Organize imports" })
-
   -- crates.nvim
   local function init_crates_nvim()
     local crates = require "crates"

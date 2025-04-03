@@ -29,13 +29,25 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- typescript
 local mason_registry = require "mason-registry"
 local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
   .. "/node_modules/@vue/language-server"
 
 lspconfig.ts_ls.setup {
-  on_attach = nvlsp.on_attach,
+  on_attach = function(client, bufnr)
+    nvlsp.on_attach(client, bufnr)
+    vim.keymap.set(
+      "n",
+      "<leader>fo",
+      function()
+        client:exec_cmd({
+          command = "_typescript.organizeImports",
+          arguments = { vim.api.nvim_buf_get_name(bufnr) },
+        }, { bufnr = bufnr })
+      end,
+      { noremap = true, silent = true, desc = "LSP Organize Imports", buffer = bufnr }
+    )
+  end,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
 
@@ -48,20 +60,8 @@ lspconfig.ts_ls.setup {
       },
     },
   },
-
   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-
-  commands = {
-    OrganizeImports = {
-      function()
-        local params = {
-          command = "_typescript.organizeImports",
-          arguments = { vim.api.nvim_buf_get_name(0) },
-          title = "",
-        }
-        vim.lsp.buf.execute_command(params)
-      end,
-      description = "Organize Imports",
-    },
-  },
 }
+
+-- No need to set `hybridMode` to `true` as it's the default value
+lspconfig.volar.setup {}
