@@ -6,11 +6,9 @@ nvlsp.defaults()
 local servers = {
   "pylsp",
   "taplo",
-  "cssls",
   "css_variables",
   "html",
   "rust_analyzer",
-  "somesass_ls",
   "jsonls",
   "unocss",
 }
@@ -28,6 +26,20 @@ for _, lsp in ipairs(servers) do
     capabilities = nvlsp.capabilities,
   }
 end
+
+lspconfig.cssls.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  filetypes = { "css", "less" },
+}
+
+lspconfig.somesass_ls.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  filetypes = { "scss", "sass" },
+}
 
 local mason_registry = require "mason-registry"
 local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()

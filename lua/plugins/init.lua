@@ -67,13 +67,13 @@ return {
             fallback()
           end
         end),
-        ["<S-g>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item { count = #cmp.get_entries() - cmp.get_selected_index() }
-          else
-            fallback()
-          end
-        end),
+        -- ["<S-g>"] = cmp.mapping(function(fallback)
+        --   if cmp.visible() then
+        --     cmp.select_next_item { count = #cmp.get_entries() - cmp.get_selected_index() }
+        --   else
+        --     fallback()
+        --   end
+        -- end),
         ["<C-u>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item { count = math.floor(#cmp.get_entries() / 2) }
@@ -235,5 +235,28 @@ return {
     lazy = false,
     tag = "stable",
     config = function() require("crates").setup() end,
+  },
+
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function(plugin)
+      if vim.fn.executable "npx" then
+        vim.cmd("!cd " .. plugin.dir .. " && cd app && npx --yes yarn install")
+      else
+        vim.cmd [[Lazy load markdown-preview.nvim]]
+        vim.fn["mkdp#util#install"]()
+      end
+    end,
+    init = function()
+      if vim.fn.executable "npx" then vim.g.mkdp_filetypes = { "markdown" } end
+    end,
+  },
+
+  {
+    "nvim-pack/nvim-spectre",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function() require("spectre").setup() end,
   },
 }

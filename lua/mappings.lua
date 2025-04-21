@@ -110,28 +110,28 @@ function M.init()
     local opts = { silent = true }
     local function D(desc) return _with_desc(opts, "Crates " .. desc) end
 
-    vim.keymap.set("n", "<leader>ct", crates.toggle, D "Toggle")
-    vim.keymap.set("n", "<leader>cr", crates.reload, D "Reload")
+    map("n", "<leader>ct", crates.toggle, D "Toggle")
+    map("n", "<leader>cr", crates.reload, D "Reload")
 
-    vim.keymap.set("n", "<leader>cv", crates.show_versions_popup, D "Show versions popup")
-    vim.keymap.set("n", "<leader>cf", crates.show_features_popup, D "Show features popup")
-    vim.keymap.set("n", "<leader>cd", crates.show_dependencies_popup, D "Show dependencies popup")
+    map("n", "<leader>cv", crates.show_versions_popup, D "Show versions popup")
+    map("n", "<leader>cf", crates.show_features_popup, D "Show features popup")
+    map("n", "<leader>cd", crates.show_dependencies_popup, D "Show dependencies popup")
 
-    vim.keymap.set("n", "<leader>cu", crates.update_crate, D "Update crate")
-    vim.keymap.set("v", "<leader>cu", crates.update_crates, D "Update crates")
-    vim.keymap.set("n", "<leader>ca", crates.update_all_crates, D "Update all crates")
-    vim.keymap.set("n", "<leader>cU", crates.upgrade_crate, D "Upgrade crate")
-    vim.keymap.set("v", "<leader>cU", crates.upgrade_crates, D "Upgrade crates")
-    vim.keymap.set("n", "<leader>cA", crates.upgrade_all_crates, D "Upgrade all crates")
+    map("n", "<leader>cu", crates.update_crate, D "Update crate")
+    map("v", "<leader>cu", crates.update_crates, D "Update crates")
+    map("n", "<leader>ca", crates.update_all_crates, D "Update all crates")
+    map("n", "<leader>cU", crates.upgrade_crate, D "Upgrade crate")
+    map("v", "<leader>cU", crates.upgrade_crates, D "Upgrade crates")
+    map("n", "<leader>cA", crates.upgrade_all_crates, D "Upgrade all crates")
 
-    vim.keymap.set("n", "<leader>cx", crates.expand_plain_crate_to_inline_table, D "Expand plain crate to inline table")
-    vim.keymap.set("n", "<leader>cX", crates.extract_crate_into_table, opts)
+    map("n", "<leader>cx", crates.expand_plain_crate_to_inline_table, D "Expand plain crate to inline table")
+    map("n", "<leader>cX", crates.extract_crate_into_table, opts)
 
-    vim.keymap.set("n", "<leader>cH", crates.open_homepage, D "Open homepage")
-    vim.keymap.set("n", "<leader>cR", crates.open_repository, D "Open repository")
-    vim.keymap.set("n", "<leader>cD", crates.open_documentation, D "Open documentation")
-    vim.keymap.set("n", "<leader>cC", crates.open_crates_io, D "Open crates.io")
-    vim.keymap.set("n", "<leader>cL", crates.open_lib_rs, D "Open lib.rs")
+    map("n", "<leader>cH", crates.open_homepage, D "Open homepage")
+    map("n", "<leader>cR", crates.open_repository, D "Open repository")
+    map("n", "<leader>cD", crates.open_documentation, D "Open documentation")
+    map("n", "<leader>cC", crates.open_crates_io, D "Open crates.io")
+    map("n", "<leader>cL", crates.open_lib_rs, D "Open lib.rs")
   end
 
   -- package-info.nvim
@@ -140,13 +140,22 @@ function M.init()
     local opts = { silent = true, noremap = true }
     local function D(desc) return _with_desc(opts, "PackageInfo " .. desc) end
 
-    vim.keymap.set({ "n" }, "<leader>ns", api.show, D "Show dependency versions")
-    vim.keymap.set({ "n" }, "<leader>nc", api.hide, D "Hide dependency versions")
-    vim.keymap.set({ "n" }, "<leader>nt", api.toggle, D "Toggle dependency versions")
-    vim.keymap.set({ "n" }, "<leader>nu", api.update, D "Update dependency on the line")
-    vim.keymap.set({ "n" }, "<leader>nd", api.delete, D "Delete dependency on the line")
-    vim.keymap.set({ "n" }, "<leader>ni", api.install, D "Install a new dependency")
-    vim.keymap.set({ "n" }, "<leader>np", api.change_version, D "Install a different dependency version")
+    map({ "n" }, "<leader>ns", api.show, D "Show dependency versions")
+    map({ "n" }, "<leader>nc", api.hide, D "Hide dependency versions")
+    map({ "n" }, "<leader>nt", api.toggle, D "Toggle dependency versions")
+    map({ "n" }, "<leader>nu", api.update, D "Update dependency on the line")
+    map({ "n" }, "<leader>nd", api.delete, D "Delete dependency on the line")
+    map({ "n" }, "<leader>ni", api.install, D "Install a new dependency")
+    map({ "n" }, "<leader>np", api.change_version, D "Install a different dependency version")
+  end
+
+  -- nvim-spectre
+  local function init_spectre()
+    local api = require "spectre"
+    local opts = { silent = true, noremap = true }
+    local function D(desc) return _with_desc(opts, "Spectre " .. desc) end
+
+    map({ "n" }, "<leader>fh", function() api.open() end, D "Spectre Find and Replace in Project")
   end
 
   init_window_resize()
@@ -156,6 +165,7 @@ function M.init()
   init_telescope()
   init_crates_nvim()
   init_package_info_nvim()
+  init_spectre()
 
   map("n", ";", ":", { desc = "CMD enter command mode" })
   map("i", "jk", "<ESC>")
