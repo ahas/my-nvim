@@ -62,7 +62,6 @@ lspconfig.ts_ls.setup {
   end,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
-
   init_options = {
     plugins = {
       {
@@ -75,5 +74,8 @@ lspconfig.ts_ls.setup {
   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 }
 
--- No need to set `hybridMode` to `true` as it's the default value
-lspconfig.volar.setup {}
+lspconfig.volar.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+}

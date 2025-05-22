@@ -113,6 +113,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
       vim.cmd "set title"
       vim.cmd("set titlestring=" .. root)
+
+      local project_local = vim.fn.getcwd() .. "/.nvim/init.lua"
+      if vim.fn.filereadable(project_local) == 1 then dofile(project_local) end
     end
   end,
 })
