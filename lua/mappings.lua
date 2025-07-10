@@ -102,6 +102,7 @@ function M.init()
       function() telescope.diagnostics { bufnr = 0 } end,
       D "telescope diagnostics (current buffer)"
     )
+    map("n" , "<leader>fr", function() telescope.resume() end, D "telescope resume")
   end
 
   -- crates.nvim
@@ -155,7 +156,7 @@ function M.init()
     local opts = { silent = true, noremap = true }
     local function D(desc) return _with_desc(opts, "Spectre " .. desc) end
 
-    map({ "n" }, "<leader>fh", function() api.open() end, D "Spectre Find and Replace in Project")
+    map({ "n" }, "<leader>fh", function() api.open() end, D "Find and Replace in Project")
   end
 
   init_window_resize()
