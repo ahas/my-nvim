@@ -1,7 +1,4 @@
-local nvlsp = require "nvchad.configs.lspconfig"
-local lspconfig = require "lspconfig"
-
-nvlsp.defaults()
+require("nvchad.configs.lspconfig").defaults()
 
 local servers = {
   "pylsp",
@@ -11,71 +8,70 @@ local servers = {
   "rust_analyzer",
   "jsonls",
   "unocss",
+  "vtsls",
+  "vue_ls",
 }
 
--- local function on_attach(client, bufnr)
---   nvlsp.on_attach(client, bufnr)
---   require("mappings").init()
--- end
-
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  }
-end
-
-lspconfig.cssls.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
+-- CSS
+vim.lsp.config("cssls", {
   filetypes = { "css", "less" },
-}
-
-lspconfig.somesass_ls.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
+})
+vim.lsp.config("somesass_ls", {
   filetypes = { "scss", "sass" },
-}
+})
 
-local mason_registry = require "mason-registry"
-local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+-- Volar
+local vue_language_server_path = vim.fn.expand "$MASON/packages"
+  .. "/vue-language-server"
   .. "/node_modules/@vue/language-server"
-
-lspconfig.ts_ls.setup {
-  on_attach = function(client, bufnr)
-    nvlsp.on_attach(client, bufnr)
-    vim.keymap.set(
-      "n",
-      "<leader>fo",
-      function()
-        client:exec_cmd({
-          command = "_typescript.organizeImports",
-          arguments = { vim.api.nvim_buf_get_name(bufnr) },
-        }, { bufnr = bufnr })
-      end,
-      { noremap = true, silent = true, desc = "LSP Organize Imports", buffer = bufnr }
-    )
-  end,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-  init_options = {
-    plugins = {
-      {
-        name = "@vue/typescript-plugin",
-        location = vue_language_server_path,
-        languages = { "vue" },
+local vue_plugin = {
+  name = "@vue/typescript-plugin",
+  location = vue_language_server_path,
+  languages = { "vue" },
+  configNamespace = "typescript",
+}
+local vtsls_config = {
+  settings = {
+    vtsls = {
+      tsserver = {
+        globalPlugins = {
+          vue_plugin,
+        },
       },
     },
   },
   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 }
 
-lspconfig.volar.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
+local vue_ls_config = {
+  on_init = function(client)
+    client.handlers["tsserver/request"] = function(_, result, context)
+      local clients = vim.lsp.get_clients { bufnr = context.bufnr, name = "vtsls" }
+      if #clients == 0 then
+        vim.notify("Could not find `vtsls` lsp client, `vue_ls` would not work without it.", vim.log.levels.ERROR)
+        return
+      end
+      local ts_client = clients[1]
+
+      local param = unpack(result)
+      local id, command, payload = unpack(param)
+      ts_client:exec_cmd({
+        title = "vue_request_forward", -- You can give title anything as it's used to represent a command in the UI, `:h Client:exec_cmd`
+        command = "typescript.tsserverRequest",
+        arguments = {
+          command,
+          payload,
+        },
+      }, { bufnr = context.bufnr }, function(_, r)
+        local response_data = { { id, r.body } }
+        ---@diagnostic disable-next-line: param-type-mismatch
+        client:notify("tsserver/response", response_data)
+      end)
+    end
+  end,
 }
+vim.lsp.config("vtsls", vtsls_config)
+vim.lsp.config("vue_ls", vue_ls_config)
+
+-- End of Configs
+vim.lsp.enable(servers)
