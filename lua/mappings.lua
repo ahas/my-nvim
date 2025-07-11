@@ -102,7 +102,7 @@ function M.init()
       function() telescope.diagnostics { bufnr = 0 } end,
       D "telescope diagnostics (current buffer)"
     )
-    map("n" , "<leader>fr", function() telescope.resume() end, D "telescope resume")
+    map("n", "<leader>fr", function() telescope.resume() end, D "telescope resume")
   end
 
   -- crates.nvim
@@ -159,6 +159,18 @@ function M.init()
     map({ "n" }, "<leader>fh", function() api.open() end, D "Find and Replace in Project")
   end
 
+  -- nvim-vtsls
+  local function init_vtsls()
+    local api = require "vtsls"
+    local opts = { silent = true, noremap = true }
+    local function D(desc) return _with_desc(opts, "TypeScript " .. desc) end
+
+    map({ "n" }, "<leader>fto", api.commands.organize_imports, D "Organize Imports")
+    map({ "n" }, "<leader>ftm", api.commands.organize_imports, D "Add Missing Imports")
+    map({ "n" }, "<leader>fts", api.commands.organize_imports, D "Sort Imports")
+    map({ "n" }, "<leader>ftu", api.commands.organize_imports, D "Remove Unused Imports")
+  end
+
   init_window_resize()
   init_dap()
   init_neovide()
@@ -167,6 +179,7 @@ function M.init()
   init_crates_nvim()
   init_package_info_nvim()
   init_spectre()
+  init_vtsls()
 
   map("n", ";", ":", { desc = "CMD enter command mode" })
   map("i", "jk", "<ESC>")

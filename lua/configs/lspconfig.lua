@@ -70,6 +70,7 @@ local vue_ls_config = {
     end
   end,
 }
+
 vim.lsp.config("vtsls", vtsls_config)
 vim.lsp.config("vue_ls", vue_ls_config)
 
