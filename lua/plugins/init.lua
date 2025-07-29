@@ -57,6 +57,9 @@ return {
       local conf = require "nvchad.configs.cmp"
 
       local mappings = {
+        ["<Tab>"] = nil,
+        ["<S-Tab>"] = nil,
+
         ["<C-h>"] = cmp.mapping.open_docs(),
         ["<C-f>"] = cmp.mapping.scroll_docs(-4),
         ["<C-b>"] = cmp.mapping.scroll_docs(4),
