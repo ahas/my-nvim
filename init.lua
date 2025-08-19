@@ -1,7 +1,7 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
--- bootstrap lazy and all plugins
+-- Bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
 if not vim.uv.fs_stat(lazypath) then
@@ -21,7 +21,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- load plugins
+-- Load plugins
 require("lazy").setup({
   {
     "NvChad/NvChad",
@@ -33,7 +33,7 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
--- load theme
+-- Load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
@@ -41,14 +41,14 @@ require "options"
 require "nvchad.autocmds"
 require("mappings").init()
 
--- add file types
+-- Add file types
 vim.filetype.add {
   pattern = {
     [".*%.ipynb.*"] = "python",
   },
 }
 
--- init cwd
+-- Init cwd
 local function get_first_arg()
   local arg = vim.fn.argv(0)
 
@@ -58,6 +58,7 @@ local function get_first_arg()
 end
 
 local function is_wsl() return vim.loop.os_uname().release:lower():find "wsl" ~= nil end
+local function is_wayland() return vim.env.WAYLAND_DISPLAY and vim.env.WAYLAND_DISPLAY ~= "" end
 
 local function convert_to_local_path(path)
   if is_wsl() then
@@ -121,3 +122,19 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 vim.api.nvim_set_hl(0, "Search", { fg = "white", bg = "red" })
+
+-- Set system clipboard for WSL2
+if is_wsl() and is_wayland() then
+  vim.g.clipboard = {
+    name = "win32yank",
+    copy = {
+      ["+"] = "win32yank.exe -i --crlf",
+      ["*"] = "win32yank.exe -i --crlf",
+    },
+    paste = {
+      ["+"] = "win32yank.exe -o --lf",
+      ["*"] = "win32yank.exe -o --lf",
+    },
+    cache_enabled = 0,
+  }
+end
