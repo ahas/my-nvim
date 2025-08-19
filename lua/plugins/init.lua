@@ -170,7 +170,16 @@ return {
     config = function()
       require("telescope").setup {
         defaults = {
-          use_regex = false,
+          vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--fixed-strings",
+          },
         },
         extensions = {
           package_info = {
