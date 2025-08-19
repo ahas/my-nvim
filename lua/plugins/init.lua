@@ -169,6 +169,9 @@ return {
     "nvim-telescope/telescope.nvim",
     config = function()
       require("telescope").setup {
+        defaults = {
+          use_regex = false,
+        },
         extensions = {
           package_info = {
             -- Optional theme (the extension doesn't set a default theme)
