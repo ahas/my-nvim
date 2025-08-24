@@ -1,4 +1,4 @@
-require("nvchad.configs.lspconfig").defaults()
+-- require("nvchad.configs.lspconfig").defaults()
 
 local servers = {
   "pylsp",
@@ -45,8 +45,8 @@ local vtsls_config = {
 }
 local vue_ls_config = {}
 
-vim.lsp.config('vtsls', vtsls_config)
-vim.lsp.config('vue_ls', vue_ls_config)
+vim.lsp.config("vtsls", vtsls_config)
+vim.lsp.config("vue_ls", vue_ls_config)
 
 -- End of Configs
 vim.lsp.enable(servers)
