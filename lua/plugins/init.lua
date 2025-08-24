@@ -169,18 +169,18 @@ return {
     "nvim-telescope/telescope.nvim",
     config = function()
       require("telescope").setup {
-        defaults = {
-          vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-            "--fixed-strings",
-          },
-        },
+        -- defaults = {
+        --   vimgrep_arguments = {
+        --     "rg",
+        --     "--color=never",
+        --     "--no-heading",
+        --     "--with-filename",
+        --     "--line-number",
+        --     "--column",
+        --     "--smart-case",
+        --     "--fixed-strings",
+        --   },
+        -- },
         extensions = {
           package_info = {
             -- Optional theme (the extension doesn't set a default theme)
