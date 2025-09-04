@@ -1,3 +1,24 @@
+local utils = require "utils"
+
+-- Set system clipboard for WSL2
+if utils.is_wsl() and utils.is_wayland() and not utils.is_vscode() then
+  vim.g.clipboard = {
+    name = "win32yank",
+    copy = {
+      ["+"] = "win32yank.exe -i --crlf",
+      ["*"] = "win32yank.exe -i --crlf",
+    },
+    paste = {
+      ["+"] = "win32yank.exe -o --lf",
+      ["*"] = "win32yank.exe -o --lf",
+    },
+    cache_enabled = 0,
+  }
+end
+
+-- Skip if running on vscode
+if utils.is_vscode() then return end
+
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
@@ -57,11 +78,8 @@ local function get_first_arg()
   return tostring(arg)
 end
 
-local function is_wsl() return vim.loop.os_uname().release:lower():find "wsl" ~= nil end
-local function is_wayland() return vim.env.WAYLAND_DISPLAY and vim.env.WAYLAND_DISPLAY ~= "" end
-
 local function convert_to_local_path(path)
-  if is_wsl() then
+  if utils.is_wsl() then
     local wsl_distro_name = os.getenv "WSL_DISTRO_NAME"
     local unc_prefix = "\\?\\UNC\\wsl.localhost\\" .. wsl_distro_name
 
@@ -120,21 +138,3 @@ vim.api.nvim_create_autocmd("VimEnter", {
     end
   end,
 })
-
-vim.api.nvim_set_hl(0, "Search", { fg = "white", bg = "red" })
-
--- Set system clipboard for WSL2
-if is_wsl() and is_wayland() then
-  vim.g.clipboard = {
-    name = "win32yank",
-    copy = {
-      ["+"] = "win32yank.exe -i --crlf",
-      ["*"] = "win32yank.exe -i --crlf",
-    },
-    paste = {
-      ["+"] = "win32yank.exe -o --lf",
-      ["*"] = "win32yank.exe -o --lf",
-    },
-    cache_enabled = 0,
-  }
-end

@@ -14,8 +14,8 @@ M.base46 = {
 
 M.ui = {
   statusline = {
-    theme = "minimal",
-    separator_style = "block",
+    theme = "default",
+    separator_style = "default",
   },
 }
 

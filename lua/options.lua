@@ -20,3 +20,6 @@ o.tabstop = 2
 o.shiftwidth = 2
 o.relativenumber = true
 vim.g.rust_recommended_style = false
+
+vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = "#fcba03" })
+vim.api.nvim_set_hl(0, "IncSearch", { fg = "#ffffff", bg = "#fc3003" })

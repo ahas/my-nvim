@@ -7,3 +7,12 @@
 # Credits
 
 1) Lazyvim starter https://github.com/LazyVim/starter as nvchad's starter was inspired by Lazyvim's . It made a lot of things easier!
+
+# Language Servers
+
+```bash
+sudo npm install -g typescript typescript-language-server
+sudo npm install -g @vue/language-server
+sudo npm install -g unocss-language-server
+sudo npm install -g css-variables-language-server
+```
