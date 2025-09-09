@@ -171,6 +171,57 @@ function M.init()
     map({ "n" }, "<leader>ftu", api.commands.organize_imports, D "Remove Unused Imports")
   end
 
+  -- gitsigns
+  local function init_gitsigns()
+    local api = require "gitsigns"
+    local opts = { silent = true, noremap = true }
+    local function D(desc) return _with_desc(opts, "gitsigns " .. desc) end
+
+    -- Navigation
+    map({ "n" }, "]c", function()
+      if vim.wo.diff then
+        vim.cmd.normal { "]c", bang = true }
+      else
+        api.nav_hunk "next"
+      end
+    end, D "Next hunk")
+
+    map("n", "[c", function()
+      if vim.wo.diff then
+        vim.cmd.normal { "[c", bang = true }
+      else
+        api.nav_hunk "prev"
+      end
+    end, D "Previous hunk")
+
+    -- Actions
+    map({ "n" }, "<leader>hs", api.stage_hunk, D "Stage hunk")
+    map({ "v" }, "<leader>hs", function() api.stage_hunk { vim.fn.line ".", vim.fn.line "v" } end, D "Stage hunk")
+
+    map({ "n" }, "<leader>hr", api.reset_hunk, D "Reset hunk")
+    map({ "v" }, "<leader>hr", function() api.reset_hunk { vim.fn.line ".", vim.fn.line "v" } end, D "Reset hunk")
+
+    map({ "n" }, "<leader>hS", api.stage_buffer, D "Stage buffer")
+    map({ "n" }, "<leader>hR", api.reset_buffer, D "Reset buffer")
+    map({ "n" }, "<leader>hp", api.preview_hunk, D "Preview hunk")
+    map({ "n" }, "<leader>hi", api.preview_hunk_inline, D "Preview hunk inline")
+
+    map({ "n" }, "<leader>hb", function() api.blame_line { full = true } end, D "Blame line")
+
+    map({ "n" }, "<leader>hd", api.diffthis, D "Diff this")
+    map({ "n" }, "<leader>hD", function() api.diffthis "~" end, D "Diff this")
+
+    map({ "n" }, "<leader>hQ", function() api.setqflist "all" end, D "QuickFix list (all)")
+    map({ "n" }, "<leader>hq", api.setqflist, D "QuickFix list")
+
+    -- Toggles
+    map({ "n" }, "<leader>tb", api.toggle_current_line_blame, D "Toggle current line blame")
+    map({ "n" }, "<leader>tw", api.toggle_word_diff, D "Toggle word diff")
+
+    -- Text object
+    map({ "o", "x" }, "ih", api.select_hunk, D "Select hunk")
+  end
+
   init_window_resize()
   init_dap()
   init_neovide()
@@ -180,7 +231,9 @@ function M.init()
   init_package_info_nvim()
   init_spectre()
   init_vtsls()
+  init_gitsigns()
 
+  del("n", "<leader>h")
   map("n", ";", ":", { desc = "CMD enter command mode" })
   map("i", "jk", "<ESC>")
 end

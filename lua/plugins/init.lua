@@ -107,6 +107,10 @@ return {
   },
 
   {
+    "lewis6991/gitsigns.nvim",
+  },
+
+  {
     "stevearc/conform.nvim",
     -- event = 'BufWritePre', -- uncomment for format on save
     opts = require "configs.conform",
@@ -180,6 +184,9 @@ return {
       }
 
       conf.mapping = vim.tbl_deep_extend("force", conf.mapping, mappings)
+
+      conf.window.completion = cmp.config.window.bordered()
+      conf.window.documentation = cmp.config.window.bordered()
 
       return conf
     end,
@@ -257,7 +264,7 @@ return {
         },
       }
       require("telescope").load_extension "package_info"
-      require "configs.telescope"
+      -- require "configs.telescope"
     end,
   },
 
@@ -400,5 +407,12 @@ return {
         },
       }
     end,
+  },
+
+  {
+    "stevearc/overseer.nvim",
+    opts = {
+      dap = false,
+    },
   },
 }
