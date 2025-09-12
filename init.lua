@@ -124,6 +124,7 @@ end
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
+    -- Set title text
     local arg0 = get_first_arg()
 
     if arg0 ~= "" then
