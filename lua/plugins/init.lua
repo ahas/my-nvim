@@ -38,16 +38,20 @@ return {
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = {
-          "vim",
-          "lua",
-          "vimdoc",
-          "html",
           "css",
-          "scss",
-          "vue",
-          "typescript",
-          "rust",
+          "html",
+          "lua",
           "python",
+          "rust",
+          "scss",
+          "sql",
+          "toml",
+          "tsx",
+          "typescript",
+          "vim",
+          "vimdoc",
+          "vue",
+          "yaml",
         },
         highlight = {
           enable = true,
@@ -69,7 +73,7 @@ return {
     "vuki656/package-info.nvim",
     lazy = false,
     opts = {
-      package_manager = "bun",
+      package_manager = "pnpm",
     },
   },
 
