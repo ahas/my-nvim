@@ -13,6 +13,9 @@ local options = {
 
   formatters = {
     injected = { options = { ignore_errors = true } },
+    rustfmt = {
+      prepend_args = { "+nightly" }
+    },
     black = {
       prepend_args = { "--line-length", "88" },
     },

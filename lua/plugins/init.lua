@@ -247,6 +247,11 @@ return {
   },
 
   {
+    "github/copilot.vim",
+    lazy = false,
+  },
+
+  {
     "stevearc/overseer.nvim",
     opts = {
       dap = false,
@@ -254,14 +259,14 @@ return {
   },
 
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    lazy = false,
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = function(_, opts)
+      -- Other blankline configuration here
+      return require("indent-rainbowline").make_opts(opts)
+    end,
     dependencies = {
-      { "nvim-lua/plenary.nvim", branch = "master" },
-    },
-    build = "make tiktoken",
-    opts = {
-      -- See Configuration section for options
+      "TheGLander/indent-rainbowline.nvim",
     },
   },
 }
