@@ -32,6 +32,7 @@ return {
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
   },
+
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -59,6 +60,7 @@ return {
       }
     end,
   },
+
   {
     "numToStr/Comment.nvim",
     lazy = false,

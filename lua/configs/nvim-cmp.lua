@@ -2,8 +2,8 @@ local cmp = require "cmp"
 local conf = require "nvchad.configs.cmp"
 
 local mappings = {
-  ["<Tab>"] = nil,
-  ["<S-Tab>"] = nil,
+  ["<Tab>"] = cmp.mapping.abort(),
+  ["<S-Tab>"] = cmp.mapping.abort(),
 
   ["<C-h>"] = cmp.mapping.open_docs(),
   ["<C-f>"] = cmp.mapping.scroll_docs(-4),
@@ -43,8 +43,7 @@ local mappings = {
 }
 
 conf.mapping = vim.tbl_deep_extend("force", conf.mapping, mappings)
-
-conf.window.completion = cmp.config.window.bordered()
-conf.window.documentation = cmp.config.window.bordered()
+-- conf.window.completion = cmp.config.window.bordered()
+-- conf.window.documentation = cmp.config.window.bordered()
 
 cmp.setup(conf)
