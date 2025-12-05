@@ -1,3 +1,5 @@
+require("custom.commands")
+
 local utils = require "utils"
 
 -- Set system clipboard for WSL2

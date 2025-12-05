@@ -171,9 +171,9 @@ return {
     config = function() require("spectre").setup() end,
   },
 
-  {
-    "yioneko/nvim-vtsls",
-  },
+  -- {
+  --   "yioneko/nvim-vtsls",
+  -- },
 
   {
     "folke/trouble.nvim",

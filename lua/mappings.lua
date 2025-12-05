@@ -230,7 +230,7 @@ function M.init()
   init_crates_nvim()
   init_package_info_nvim()
   init_spectre()
-  init_vtsls()
+  -- init_vtsls()
   init_gitsigns()
 
   del("n", "<leader>h")
