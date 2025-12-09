@@ -160,16 +160,16 @@ function M.init()
   end
 
   -- nvim-vtsls
-  -- local function init_vtsls()
-  --   local api = require "vtsls"
-  --   local opts = { silent = true, noremap = true }
-  --   local function D(desc) return _with_desc(opts, "TypeScript " .. desc) end
-  --
-  --   map({ "n" }, "<leader>fto", api.commands.organize_imports, D "Organize Imports")
-  --   map({ "n" }, "<leader>ftm", api.commands.organize_imports, D "Add Missing Imports")
-  --   map({ "n" }, "<leader>fts", api.commands.organize_imports, D "Sort Imports")
-  --   map({ "n" }, "<leader>ftu", api.commands.organize_imports, D "Remove Unused Imports")
-  -- end
+  local function init_vtsls()
+    local api = require "vtsls"
+    local opts = { silent = true, noremap = true }
+    local function D(desc) return _with_desc(opts, "TypeScript " .. desc) end
+
+    map({ "n" }, "<leader>fto", api.commands.organize_imports, D "Organize Imports")
+    map({ "n" }, "<leader>ftm", api.commands.organize_imports, D "Add Missing Imports")
+    map({ "n" }, "<leader>fts", api.commands.organize_imports, D "Sort Imports")
+    map({ "n" }, "<leader>ftu", api.commands.organize_imports, D "Remove Unused Imports")
+  end
 
   -- gitsigns
   local function init_gitsigns()
@@ -230,7 +230,7 @@ function M.init()
   init_crates_nvim()
   init_package_info_nvim()
   init_spectre()
-  -- init_vtsls()
+  init_vtsls()
   init_gitsigns()
 
   del("n", "<leader>h")
