@@ -1,15 +1,5 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local function run_code_action(kind, bufnr)
-  vim.lsp.buf.code_action {
-    context = {
-      only = { kind },
-      diagnostics = vim.diagnostic.get(bufnr or 0),
-    },
-    apply = true,
-  }
-end
-
 local servers = {
   "pylsp",
   "taplo",
@@ -40,6 +30,18 @@ local vue_plugin = {
   languages = { "vue" },
   configNamespace = "typescript",
 }
+-- local vtsls_config = {
+--   settings = {
+--     vtsls = {
+--       tsserver = {
+--         globalPlugins = {
+--           vue_plugin,
+--         },
+--       },
+--     },
+--   },
+--   filetypes = tsserver_filetypes,
+-- }
 local ts_ls_config = {
   init_options = {
     plugins = {
@@ -47,24 +49,13 @@ local ts_ls_config = {
     },
   },
   filetypes = tsserver_filetypes,
-
-  on_attach = function(client, bufnr)
-    local map = function(lhs, kind, desc)
-      vim.keymap.set("n", lhs, function() run_code_action(kind, bufnr) end, { buffer = bufnr, desc = desc })
-    end
-
-    map("<leader>fto", "source.organizeImports", "TS Organize imports")
-    map("<leader>fts", "source.sortImports.ts", "TS Sort imports")
-    map("<leader>ftm", "source.addMissingImports.ts", "TS Add missing imports")
-    map("<leader>ftr", "source.removeUnusedImports.ts", "TS Remove unused imports")
-    map("<leader>ftu", "source.removeUnused.ts", "TS Remove unused symbols")
-    map("<leader>fta", "source.fixAll.ts", "TS Fix all")
-  end,
 }
 local vue_ls_config = {}
 
 vim.lsp.config("vue_ls", vue_ls_config)
+-- vim.lsp.config("vtsls", vtsls_config)
 vim.lsp.config("ts_ls", ts_ls_config)
+-- vim.lsp.enable { "vtsls", "vue_ls" }
 vim.lsp.enable { "ts_ls", "vue_ls" }
 
 -- End of Configs
