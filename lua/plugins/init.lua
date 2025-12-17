@@ -75,7 +75,7 @@ return {
     "vuki656/package-info.nvim",
     lazy = false,
     opts = {
-      package_manager = "pnpm",
+      package_manager = "bun",
     },
   },
 
