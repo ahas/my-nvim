@@ -1,5 +1,7 @@
 require("nvchad.configs.lspconfig").defaults()
 
+local utils = require "utils"
+
 local servers = {
   "pylsp",
   "taplo",
@@ -21,9 +23,9 @@ vim.lsp.config("somesass_ls", {
 })
 
 -- Vue
-local vue_language_server_path = vim.fn.expand "$MASON/packages"
-  .. "/vue-language-server"
-  .. "/node_modules/@vue/language-server"
+local mason_dir = vim.fs.joinpath(utils.is_windows() and vim.env.MASON or "$MASON", "packages")
+local vue_language_server_path =
+  vim.fs.joinpath(mason_dir, "vue-language-server", "node_modules", "@vue/language-server")
 local tsserver_filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" }
 local vue_plugin = {
   name = "@vue/typescript-plugin",

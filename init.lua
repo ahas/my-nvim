@@ -1,4 +1,4 @@
-require("custom.commands")
+require "custom.commands"
 
 local utils = require "utils"
 
@@ -17,6 +17,9 @@ if utils.is_wsl() and utils.is_wayland() and not utils.is_vscode() then
     cache_enabled = 0,
   }
 end
+
+-- Set default shell
+if utils.is_windows() then vim.opt.shell = "pwsh" end
 
 -- Skip if running on vscode
 if utils.is_vscode() then return end
