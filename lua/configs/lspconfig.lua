@@ -52,5 +52,16 @@ local vue_ls_config = {}
 vim.lsp.config("vtsls", vtsls_config)
 vim.lsp.config("vue_ls", vue_ls_config)
 
+-- python
+vim.lsp.config("pylsp", {
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = { ignore = { "E501" } },
+      },
+    },
+  },
+})
+
 -- End of Configs
 vim.lsp.enable(servers)
