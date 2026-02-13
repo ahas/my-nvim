@@ -23,7 +23,7 @@ vim.lsp.config("somesass_ls", {
 })
 
 -- Vue
-local mason_dir = vim.fs.joinpath(utils.is_windows() and vim.env.MASON or "$MASON", "packages")
+local mason_dir = vim.fs.joinpath(vim.env.MASON, "packages")
 local vue_language_server_path =
   vim.fs.joinpath(mason_dir, "vue-language-server", "node_modules", "@vue/language-server")
 local tsserver_filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" }
