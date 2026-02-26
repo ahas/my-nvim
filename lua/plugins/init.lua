@@ -26,6 +26,11 @@ return {
   },
 
   {
+    "windwp/nvim-autopairs",
+    enabled = false,
+  },
+
+  {
     "numToStr/Comment.nvim",
   },
 
