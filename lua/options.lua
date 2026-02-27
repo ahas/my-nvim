@@ -4,7 +4,7 @@ local o = vim.opt
 
 -- neovide
 if vim.g.neovide then
-  o.guifont = "BlexMono Nerd Font,D2Coding:h12:e-antialiasing"
+  o.guifont = "CaskaydiaCove NFM,D2Coding:h12:e-antialiasing"
   vim.g.neovide_scale_factor = 1.0
   vim.g.neovide_title_background_color =
     string.format("%x", vim.api.nvim_get_hl(0, { id = vim.api.nvim_get_hl_id_by_name "Normal" }).bg)
